@@ -18,13 +18,17 @@
 
         var $header = $('<h1>Twittler</hi>')
         $header.appendTo($body);
-
+        
+        
         var $feed = $('<div id="feed"></div>');
         $feed.appendTo($body);
-
         
-        var index = streams.home.length - 1;
-        var count = streams.home.length - 1;
+        var getIndex= function(){
+          return streams.home.length - 1;
+        }
+        
+        var index = getIndex();
+        var count = getIndex();
         var totalTweets = 0;
 
         var makeTweet = function(tweet){
@@ -35,7 +39,7 @@
           var $tweetBox = $('<div class="tweetBox"></div>');
 
           var username = tweet.user;
-          var $userTag= $('<div class=' + username + '></div>');
+          var $userTag = $('<div class=' + username + '></div>');
 
           $timestamp.text(time_formatted);
           $user.text(tweet.user);
@@ -53,7 +57,7 @@
         var loadTweets = function(index, count){
         while(index > count){
           var tweet = streams.home[index];
-          tweetBox=makeTweet(tweet);
+          tweetBox = makeTweet(tweet);
           //tweetBox.prependTo($feed);
           
           index -= 1;
@@ -63,6 +67,9 @@
             $(this).css('background-color', '#252b30');
             $(this).css('border-color', '1px solid #967');
             var thisUser = $(this).text();
+            $( ".tweetBox" ).not( "."+thisUser ).remove();
+            //$(this).parent().parent().remove();
+            
             getUserTweets(thisUser);
             
           });
@@ -75,13 +82,14 @@
         }
         };
 
+        //getStarted();
         loadTweets(index, -1);
 
         setInterval(function(){
-          var newindex = streams.home.length - 1;
+          var newindex = getIndex();
           loadTweets(newindex, count);
         
-          count=streams.home.length - 1;
+          count=getIndex();
         }, 60000);
 
         var getUserTweets = function(username){
@@ -93,38 +101,6 @@
           }
         };
 
-        // var getUserTweets = function(username){
-        //  var tweetArray=streams.home.slice(0, totalTweets);
-        //   for (var i=0; i < tweetArray.length; i++){
-        //     if (tweetArray[i].user==username){
-        //       var $tweet = $('<div class="tweet"></div>');
-        //       var $user = $('<a class="user"></a>');
-        //       var $timestamp = $('<div class="time"></div>');
-        //       var time_formatted = moment().format('MMMM Do YYYY, h:mm:ss a').toString();
-        //       var $tweetBox = $('<div class="tweetBox"></div>');
-
-        //       $timestamp.text(time_formatted);
-        //       $user.text(tweet.user);
-        //       $tweet.text(tweet.message);
-
-
-        //       $user.appendTo($tweetBox);
-        //       $tweet.appendTo($tweetBox);
-        //       $timestamp.appendTo($tweetBox);
-
-
-
-        //       $tweetBox.prependTo($body);
-        //     }
-        //   }
-          
-
-        // };
-
-
-
-        //$('body').on('click','.user', getUserTweets);
-        //$('button').on('click')
 
       });
 
