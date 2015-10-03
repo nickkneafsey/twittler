@@ -3,25 +3,75 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="moment.js"></script>
+    <link rel="stylesheet" href="twittler.css"></link>
   </head>
   <body>
-    <script>
+    <header>
+      <h1>Twittler</h1>
+    </header>
+    <div class="refresh-button">
+      <button class="refresher">
+      </button>
+    </div>
+    <div class="tweet-container">
+      <section id="tweets">
+      </section>
+    </div>
 
+    <script>
+     
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
 
+
+        
         var index = streams.home.length - 1;
-        while(index >= 0){
+        var count=streams.home.length - 1;
+
+        var loadTweets = function(index, count){
+        while(index > count){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var $tweet = $('<div class="tweet"></div>');
+          var $user = $('<button class="user"></button>');
+          var $timestamp = $('<div class="time"></div>');
+          var time_formatted = moment().format('MMMM Do YYYY, h:mm:ss a').toString();
+          var $tweetBox = $('<div class="tweetBox"></div>');
+
+          $timestamp.text(time_formatted);
+          $user.text(tweet.user);
+          $tweet.text(tweet.message);
+
+          
+          $user.appendTo($tweetBox);
+          $tweet.appendTo($tweetBox);
+          $timestamp.appendTo($tweetBox);
+
+          $tweetBox.prependTo($body);
           index -= 1;
         }
+        };
+
+        loadTweets(index, -1);
+
+        setInterval(function(){
+          var newindex = streams.home.length - 1;
+          loadTweets(newindex, count);
+        
+          count=streams.home.length - 1;
+        }, 10000);
+
+        var getUserTweets = function(){
+          $('.tweetBox').find('.user').show();
+        }
+
+        //$('body').on('click','.user', getUserTweets);
+        //$('button').on('click')
 
       });
 
     </script>
+    
   </body>
 </html>
