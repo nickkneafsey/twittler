@@ -5,19 +5,10 @@
     <script src="data_generator.js"></script>
     <script src="moment.js"></script>
     <link rel="stylesheet" href="twittler.css"></link>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <header>
-      <h1>Twittler</h1>
-    </header>
-    <div class="refresh-button">
-      <button class="refresher">
-      </button>
-    </div>
-    <div class="tweet-container">
-      <section id="tweets">
-      </section>
-    </div>
+    
 
     <script>
      
@@ -25,19 +16,26 @@
         var $body = $('body');
         $body.html('');
 
+        var $header = $('<h1>Twittler</hi>')
+        $header.appendTo($body);
+
+        var $feed = $('<div id="feed"></div>');
+        $feed.appendTo($body);
 
         
         var index = streams.home.length - 1;
-        var count=streams.home.length - 1;
+        var count = streams.home.length - 1;
+        var totalTweets = 0;
 
-        var loadTweets = function(index, count){
-        while(index > count){
-          var tweet = streams.home[index];
+        var makeTweet = function(tweet){
           var $tweet = $('<div class="tweet"></div>');
-          var $user = $('<button class="user"></button>');
+          var $user = $('<div class="user"></div>');
           var $timestamp = $('<div class="time"></div>');
           var time_formatted = moment().format('MMMM Do YYYY, h:mm:ss a').toString();
           var $tweetBox = $('<div class="tweetBox"></div>');
+
+          var username = tweet.user;
+          var $userTag= $('<div class=' + username + '></div>');
 
           $timestamp.text(time_formatted);
           $user.text(tweet.user);
@@ -47,9 +45,33 @@
           $user.appendTo($tweetBox);
           $tweet.appendTo($tweetBox);
           $timestamp.appendTo($tweetBox);
+          $userTag.appendTo($tweetBox);
+          $tweetBox.prependTo($feed);
+          //return $tweetBox;
+        }; 
 
-          $tweetBox.prependTo($body);
+        var loadTweets = function(index, count){
+        while(index > count){
+          var tweet = streams.home[index];
+          tweetBox=makeTweet(tweet);
+          //tweetBox.prependTo($feed);
+          
           index -= 1;
+          totalTweets ++ ;
+
+          $('.tweetBox').on('click', '.user', function() {
+            $(this).css('background-color', '#252b30');
+            $(this).css('border-color', '1px solid #967');
+            var thisUser = $(this).text();
+            getUserTweets(thisUser);
+            
+          });
+          // $('.user').on('click', function() {
+          //   var thisUser = $(".user").text();
+          //   $('.feed').filter("."+thisUser);
+          //   //getUserTweets(thisUser);
+          // });
+
         }
         };
 
@@ -60,11 +82,46 @@
           loadTweets(newindex, count);
         
           count=streams.home.length - 1;
-        }, 10000);
+        }, 60000);
 
-        var getUserTweets = function(){
-          $('.tweetBox').find('.user').show();
-        }
+        var getUserTweets = function(username){
+          var tweetArray=streams.home.slice(0, totalTweets);
+          for (var i=0; i < tweetArray.length; i++){
+            if (tweetArray[i].user==username){
+              makeTweet(tweetArray[i]);
+            }
+          }
+        };
+
+        // var getUserTweets = function(username){
+        //  var tweetArray=streams.home.slice(0, totalTweets);
+        //   for (var i=0; i < tweetArray.length; i++){
+        //     if (tweetArray[i].user==username){
+        //       var $tweet = $('<div class="tweet"></div>');
+        //       var $user = $('<a class="user"></a>');
+        //       var $timestamp = $('<div class="time"></div>');
+        //       var time_formatted = moment().format('MMMM Do YYYY, h:mm:ss a').toString();
+        //       var $tweetBox = $('<div class="tweetBox"></div>');
+
+        //       $timestamp.text(time_formatted);
+        //       $user.text(tweet.user);
+        //       $tweet.text(tweet.message);
+
+
+        //       $user.appendTo($tweetBox);
+        //       $tweet.appendTo($tweetBox);
+        //       $timestamp.appendTo($tweetBox);
+
+
+
+        //       $tweetBox.prependTo($body);
+        //     }
+        //   }
+          
+
+        // };
+
+
 
         //$('body').on('click','.user', getUserTweets);
         //$('button').on('click')
