@@ -17,6 +17,11 @@ h1 {
 	border-color: 1px solid #967;*/
 }
 
+h2 {
+	margin-left: 10px;
+	font-family: 'Open Sans', sans-serif;
+}
+
 #sidebar{
 
 	clear: left;
@@ -24,10 +29,30 @@ h1 {
 	margin-left: 25px;
 	display: inline-block;
 	/*width: 200px;*/
-	height: 300px;
+	height: 175px;
 	width: 27%;
 	background-color: #FFFFFF;
 	border: 1px solid #E8E8E8 ;
+}
+
+
+.user {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font: 15px;
+	color: #1E90FF;
+	padding: 5px 0 2px 5px;
+
+}
+.tweet {
+	font: 15px arial, sans-serif;
+	padding: 2px 0 3px 5px;
+}
+.time {
+	/*font-family: "Helvetica";*/
+	font: 12px "Helvetica";
+	color: #808080;
+	padding: 2px 0 5px 5px;
 }
 
 .tweetBox {
@@ -36,23 +61,10 @@ h1 {
 	margin: 0 20px 0 20px;
 	border: 1px solid #E8E8E8 ;
 	background-color: #FFFFFF;
+
 	/*background: linear-gradient(to right, #FFFFFF, #FFFFFF 90%, #DCDCDC);*/
 }
-.user {
-	font-family: "Helvetica";
-	font-weight: bold;
-	font: 18px;
-	color: #1E90FF;
 
-}
-.tweet {
-	font: 15px arial, sans-serif;
-}
-.time {
-	font-family: "Helvetica";
-	font: 8px;
-	color: #808080;
-}
 #feed{
 	float: right;
 	width: 70%;
@@ -61,4 +73,12 @@ h1 {
 }
 #return {
 	visibility: hidden;
+	font: 15px 'Open Sans', sans-serif;;
+	margin-left: 10px;
+	
+	background-color: #32CD32;
+	color: #F0F8FF;
+	width: 85%;
+	height: 30%;
+	border-radius: 25px;
 }

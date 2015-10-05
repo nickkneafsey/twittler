@@ -22,6 +22,9 @@
         var $sidebar = $('<div id="sidebar"></div>');
         $sidebar.appendTo($body);
 
+        var $welcome = $('<h2>Welcome to twittler</h2>');
+        $welcome.appendTo($sidebar);
+
         var $returnbutton = $('<button id="return">Return to feed</button>');
         $returnbutton.appendTo($sidebar);
 
@@ -77,13 +80,14 @@
             //$( ".tweetBox" ).not( userCheck ).css( "background-color", "red" );
             $returnbutton.css("visibility", "visible");
             $( ".tweetBox" ).not( userCheck ).hide();
-            
+            $welcome.text("@" + thisUser + "'s timeline");
           });
           
           $('#return').on('click', function(){
             $( ".tweetBox" ).not( userTest ).show();
             $returnbutton.css("visibility", "hidden");
             userTest=undefined;
+            $welcome.text("Welcome to twittler");
           });
 
         }
