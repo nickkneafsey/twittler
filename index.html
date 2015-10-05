@@ -25,8 +25,6 @@
         var $returnbutton = $('<button id="return">Return to feed</button>');
         $returnbutton.appendTo($sidebar);
 
-        
-        
         var $feed = $('<div id="feed"></div>');
         $feed.appendTo($body);
         
@@ -34,11 +32,12 @@
           return streams.home.length - 1;
         }
         
+        var userTest=undefined;
         var index = getIndex();
         var count = getIndex();
         var totalTweets = 0;
 
-        var makeTweet = function(tweet){
+        var makeTweet = function(tweet, test){
           var $tweet = $('<div class="tweet"></div>');
           var $user = $('<div class="user"></div>');
           var $timestamp = $('<div class="time"></div>');
@@ -58,13 +57,16 @@
           $userTag.appendTo($tweetBox);
           $tweetBox.prependTo($feed);
           //return $tweetBox;
+          if (test!==undefined){
+            $( ".tweetBox" ).not( test ).hide();
+          }
         }; 
 
         var loadTweets = function(index, count){
         while(index > count){
           var tweet = streams.home[index];
-          tweetBox = makeTweet(tweet);
-          var userTest;
+          tweetBox = makeTweet(tweet, userTest);
+          
           
           index -= 1;
           totalTweets ++ ;
@@ -85,7 +87,7 @@
           $('#return').on('click', function(){
             $( ".tweetBox" ).not( userTest ).show();
             $returnbutton.css("visibility", "hidden");
-            userTest
+            userTest=undefined;
           });
 
         }
