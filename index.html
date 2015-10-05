@@ -16,8 +16,15 @@
         var $body = $('body');
         $body.html('');
 
-        var $header = $('<h1>Twittler</hi>')
+        var $header = $('<h1>twittler</hi>');
         $header.appendTo($body);
+
+        var $sidebar = $('<div id="sidebar"></div>');
+        $sidebar.appendTo($body);
+
+        var $returnbutton = $('<button id="return">Return to feed</button>');
+        $returnbutton.appendTo($sidebar);
+
         
         
         var $feed = $('<div id="feed"></div>');
@@ -36,9 +43,8 @@
           var $user = $('<div class="user"></div>');
           var $timestamp = $('<div class="time"></div>');
           var time_formatted = moment().format('MMMM Do YYYY, h:mm:ss a').toString();
-          var $tweetBox = $('<div class="tweetBox"></div>');
-
           var username = tweet.user;
+          var $tweetBox = $('<div class="tweetBox ' + username + '"></div>');
           var $userTag = $('<div class=' + username + '></div>');
 
           $timestamp.text(time_formatted);
@@ -64,13 +70,15 @@
           totalTweets ++ ;
 
           $('.tweetBox').on('click', '.user', function() {
-            $(this).css('background-color', '#252b30');
-            $(this).css('border-color', '1px solid #967');
             var thisUser = $(this).text();
-            $( ".tweetBox" ).not( "."+thisUser ).remove();
-            //$(this).parent().parent().remove();
+            var userCheck = "."+thisUser;
+            clearInterval(interval);
+            //$( ".tweetBox" ).not( userCheck ).css( "background-color", "red" );
+            $returnbutton.css("visibility", "visible");
+            $( ".tweetBox" ).not( userCheck ).hide();
             
-            getUserTweets(thisUser);
+            
+            //getUserTweets(thisUser);
             
           });
           // $('.user').on('click', function() {
@@ -85,21 +93,22 @@
         //getStarted();
         loadTweets(index, -1);
 
-        setInterval(function(){
+        var interval = setInterval(function(){
           var newindex = getIndex();
           loadTweets(newindex, count);
         
           count=getIndex();
-        }, 60000);
+        }, 2000);
 
-        var getUserTweets = function(username){
-          var tweetArray=streams.home.slice(0, totalTweets);
-          for (var i=0; i < tweetArray.length; i++){
-            if (tweetArray[i].user==username){
-              makeTweet(tweetArray[i]);
-            }
-          }
-        };
+        // var getUserTweets = function(username){
+        //   clearInterval(interval);
+        //   var tweetArray=streams.home.slice(0, totalTweets);
+        //   for (var i=0; i < tweetArray.length; i++){
+        //     if (tweetArray[i].user==username){
+        //       makeTweet(tweetArray[i]);
+        //     }
+        //   }
+        // };
 
 
       });

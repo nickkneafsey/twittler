@@ -1,23 +1,64 @@
 body {
 	background-color: #87CEEB;
+	background: linear-gradient(to right, #191970, #1E90FF, #F5F5F5);
 	display: block;
 }
 
 h1 {
+	display: inline-block;
+	margin-left: 25px;
+	font-family: 'Open Sans', sans-serif;
+	float: left;
 	display: inline;
+	font: 200px;
+	color: #F0F8FF;
+	width: 25%;
+	/*background-color: #252b30;
+	border-color: 1px solid #967;*/
 }
+
+#sidebar{
+
+	clear: left;
+	float: left;
+	margin-left: 25px;
+	display: inline-block;
+	/*width: 200px;*/
+	height: 300px;
+	width: 27%;
+	background-color: #FFFFFF;
+	border: 1px solid #E8E8E8 ;
+}
+
 .tweetBox {
 	display: block;
 	padding: 5px 5px 5px 5px;
 	margin: 0 20px 0 20px;
 	border: 1px solid #E8E8E8 ;
 	background-color: #FFFFFF;
+	/*background: linear-gradient(to right, #FFFFFF, #FFFFFF 90%, #DCDCDC);*/
 }
 .user {
-	font: 15px bold;
+	font-family: "Helvetica";
+	font-weight: bold;
+	font: 18px;
 	color: #1E90FF;
+
 }
 .tweet {
-	font: 15px arial, sans-serif;;
+	font: 15px arial, sans-serif;
+}
+.time {
+	font-family: "Helvetica";
+	font: 8px;
 	color: #808080;
+}
+#feed{
+	float: right;
+	width: 70%;
+	overflow: auto;
+	border-radius: 25px;
+}
+#return {
+	visibility: hidden;
 }
