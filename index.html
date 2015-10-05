@@ -35,7 +35,7 @@
         var userTest=undefined;
         var index = getIndex();
         var count = getIndex();
-        var totalTweets = 0;
+        //var totalTweets = 0;
 
         var makeTweet = function(tweet, test){
           var $tweet = $('<div class="tweet"></div>');
@@ -56,7 +56,7 @@
           $timestamp.appendTo($tweetBox);
           $userTag.appendTo($tweetBox);
           $tweetBox.prependTo($feed);
-          //return $tweetBox;
+          
           if (test!==undefined){
             $( ".tweetBox" ).not( test ).hide();
           }
@@ -67,9 +67,7 @@
           var tweet = streams.home[index];
           tweetBox = makeTweet(tweet, userTest);
           
-          
           index -= 1;
-          totalTweets ++ ;
 
           $('.tweetBox').on('click', '.user', function() {
             var thisUser = $(this).text();
@@ -80,8 +78,6 @@
             $returnbutton.css("visibility", "visible");
             $( ".tweetBox" ).not( userCheck ).hide();
             
-
-            //getUserTweets(thisUser);
           });
           
           $('#return').on('click', function(){
@@ -93,7 +89,6 @@
         }
         };
 
-        //getStarted();
         loadTweets(index, -1);
 
         var interval = setInterval(function(){
@@ -101,18 +96,9 @@
           loadTweets(newindex, count);
         
           count=getIndex();
-        }, 2000);
+        }, 10000);
 
-        // var getUserTweets = function(username){
-        //   clearInterval(interval);
-        //   var tweetArray=streams.home.slice(0, totalTweets);
-        //   for (var i=0; i < tweetArray.length; i++){
-        //     if (tweetArray[i].user==username){
-        //       makeTweet(tweetArray[i]);
-        //     }
-        //   }
-        // };
-
+        
 
       });
 
