@@ -16,7 +16,7 @@
         var $body = $('body');
         $body.html('');
 
-        var $header = $('<h1>twittler</hi>');
+        var $header = $('<h1>twittler</h1>');
         $header.appendTo($body);
 
         var $sidebar = $('<div id="sidebar"></div>');
@@ -24,6 +24,12 @@
 
         var $welcome = $('<h2>Welcome to twittler</h2>');
         $welcome.appendTo($sidebar);
+
+        var $userTweet = $('<div><p>username:<input type="text" id="un"></p><p>tweet:<input type="text" id="twt"></p></div>')
+        $userTweet.appendTo($sidebar);
+
+        var $sendTweet = $('<button id="sendTweet">Tweet</button>');
+        $sendTweet.appendTo($sidebar);
 
         var $returnbutton = $('<button id="return">Return to feed</button>');
         $returnbutton.appendTo($sidebar);
@@ -80,18 +86,51 @@
             //$( ".tweetBox" ).not( userCheck ).css( "background-color", "red" );
             $returnbutton.css("visibility", "visible");
             $( ".tweetBox" ).not( userCheck ).hide();
+            $userTweet.css("visibility", "hidden");
+            $sendTweet.css("visibility", "hidden");
             $welcome.text("@" + thisUser + "'s timeline");
           });
           
           $('#return').on('click', function(){
             $( ".tweetBox" ).not( userTest ).show();
             $returnbutton.css("visibility", "hidden");
+            $userTweet.css("visibility", "visible");
+            $sendTweet.css("visibility", "visible");
             userTest=undefined;
             $welcome.text("Welcome to twittler");
           });
 
+          
+
         }
         };
+
+
+        $('#sendTweet').on('click', function(){
+            if ($("#un").val()!==undefined && $("#twt").val()!==undefined){
+            var name=$("#un").val();
+            var tweet=$("#twt").val();
+
+            var $tweet = $('<div class="tweet"></div>');
+            var $user = $('<div class="user"></div>');
+            var $timestamp = $('<div class="time"></div>');
+            var time_formatted = moment().format('MMMM Do YYYY, h:mm:ss a').toString();
+            var username = name;
+            var $tweetBox = $('<div class="tweetBox ' + username + '"></div>');
+            var $userTag = $('<div class=' + username + '></div>');
+
+            $timestamp.text(time_formatted);
+            $user.text(name);
+            $tweet.text(tweet);
+
+
+            $user.appendTo($tweetBox);
+            $tweet.appendTo($tweetBox);
+            $timestamp.appendTo($tweetBox);
+            $userTag.appendTo($tweetBox);
+            $tweetBox.prependTo($feed);
+            };
+          });
 
         loadTweets(index, -1);
 
