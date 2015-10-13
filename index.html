@@ -25,7 +25,7 @@
         var $welcome = $('<h2>Welcome to twittler</h2>');
         $welcome.appendTo($sidebar);
 
-        var $userTweet = $('<div><p>username:<input type="text" id="un"></p><p>tweet:<input type="text" id="twt"></p></div>')
+        var $userTweet = $('<div><p>username: <input type="text" id="un"></p><p>tweet: <input type="text" id="twt"></p></div>')
         $userTweet.appendTo($sidebar);
 
         var $sendTweet = $('<button id="sendTweet">Tweet</button>');
@@ -71,10 +71,43 @@
           }
         }; 
 
+        var userClick=function(){
+          $('.tweetBox').on('click', '.user', function() {
+            var thisUser = $(this).text();
+            var userCheck = "."+thisUser;
+            userTest=userCheck;
+            //clearInterval(interval);
+            //$( ".tweetBox" ).not( userCheck ).css( "background-color", "red" );
+            $returnbutton.appendTo($sidebar);
+            $returnbutton.css("visibility", "visible");
+            $( ".tweetBox" ).not( userCheck ).hide();
+            // $userTweet.css("visibility", "hidden");
+            // $sendTweet.css("visibility", "hidden");
+            $userTweet.detach();
+            $sendTweet.detach();
+            $welcome.text("@" + thisUser + "'s timeline");
+          });
+        };
+
+        var returner = function(){
+          $('#return').on('click', function(){
+            $( ".tweetBox" ).not( userTest ).show();
+            //$returnbutton.css("visibility", "hidden");
+            // $userTweet.css("visibility", "visible");
+            // $sendTweet.css("visibility", "visible");
+            $returnbutton.detach();
+            $userTweet.appendTo($sidebar);
+            $sendTweet.appendTo($sidebar);
+            userTest=undefined;
+            $welcome.text("Welcome to twittler");
+          });
+        };
+
+
         var loadTweets = function(index, count){
         while(index > count){
           var tweet = streams.home[index];
-          tweetBox = makeTweet(tweet, userTest);
+          makeTweet(tweet, userTest);
           
           index -= 1;
 
@@ -84,32 +117,30 @@
             userTest=userCheck;
             //clearInterval(interval);
             //$( ".tweetBox" ).not( userCheck ).css( "background-color", "red" );
+            $returnbutton.appendTo($sidebar);
             $returnbutton.css("visibility", "visible");
             $( ".tweetBox" ).not( userCheck ).hide();
-            $userTweet.css("visibility", "hidden");
-            $sendTweet.css("visibility", "hidden");
+            // $userTweet.css("visibility", "hidden");
+            // $sendTweet.css("visibility", "hidden");
+            $userTweet.detach();
+            $sendTweet.detach();
             $welcome.text("@" + thisUser + "'s timeline");
           });
           
-          $('#return').on('click', function(){
-            $( ".tweetBox" ).not( userTest ).show();
-            $returnbutton.css("visibility", "hidden");
-            $userTweet.css("visibility", "visible");
-            $sendTweet.css("visibility", "visible");
-            userTest=undefined;
-            $welcome.text("Welcome to twittler");
-          });
-
+          userClick();
+          returner();
           
-
         }
         };
 
 
         $('#sendTweet').on('click', function(){
-            if ($("#un").val()!==undefined && $("#twt").val()!==undefined){
+            if ($("#un").val()!=="" && $("#twt").val()!==""){
             var name=$("#un").val();
             var tweet=$("#twt").val();
+
+            $("#un").val("");
+            $("#twt").val("");
 
             var $tweet = $('<div class="tweet"></div>');
             var $user = $('<div class="user"></div>');
@@ -129,6 +160,8 @@
             $timestamp.appendTo($tweetBox);
             $userTag.appendTo($tweetBox);
             $tweetBox.prependTo($feed);
+            userClick();
+            returner();
             };
           });
 
@@ -140,8 +173,6 @@
         
           count=getIndex();
         }, 10000);
-
-        
 
       });
 

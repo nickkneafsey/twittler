@@ -5,6 +5,7 @@ body {
 }
 
 p{
+	margin-left: 10px;
 	font-family: 'Open Sans', sans-serif;
 }
 
@@ -68,6 +69,13 @@ h2 {
 
 	/*background: linear-gradient(to right, #FFFFFF, #FFFFFF 90%, #DCDCDC);*/
 }
+#sendTweet {
+	font: 10px 'Open Sans', sans-serif;
+	color: #F0F8FF;
+	border-radius: 5px;
+	width: 80%;
+	margin-left: 10px;
+}
 
 #feed{
 	float: right;
@@ -77,7 +85,7 @@ h2 {
 }
 #return {
 	visibility: hidden;
-	font: 15px 'Open Sans', sans-serif;;
+	font: 15px 'Open Sans', sans-serif;
 	margin-left: 10px;
 	
 	background-color: #32CD32;
